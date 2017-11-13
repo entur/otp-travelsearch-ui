@@ -1,0 +1,8 @@
+body {
+  background-color: black;
+  color: white;
+}
+.borderless td, .borderless th {
+  border: none;
+  padding: 0em;
+}
