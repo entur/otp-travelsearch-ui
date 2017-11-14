@@ -7,7 +7,6 @@ class TravelSearchUI extends Component {
       <div className="TravelSearchUI">
         <ReportList />
       </div>
-
     );
   }
 }
