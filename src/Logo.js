@@ -8,7 +8,7 @@ class Logo extends React.Component {
             <title>Group</title>
             <desc>Created with Sketch.</desc>
 
-            <g id="logo_Samlet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="logo_Samlet" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                 <g id="logo_Frontpage" transform="translate(-22.000000, -26.000000)">
                     <g id="logo_Group" transform="translate(22.000000, 26.000000)">
                         <g id="logo_Page-1">

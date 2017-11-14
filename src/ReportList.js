@@ -5,6 +5,29 @@ import FailedSearches from './FailedSearches';
 import Logo from './Logo';
 const { INDEX_URI, MAX_REPORTS, BASE_URI } = process.TSQA;
 
+const sortReportLiens = (a, b) => {
+  const aTimestamp = parseInt(
+    a.substring(a.lastIndexOf('-') + 1, a.lastIndexOf('.json')),
+    10
+  );
+  const bTimestamp = parseInt(
+    b.substring(b.lastIndexOf('-') + 1, b.lastIndexOf('.json')),
+    10
+  );
+
+  if (aTimestamp < bTimestamp) return 1;
+  if (aTimestamp > bTimestamp) return -1;
+  return 0;
+};
+
+const sortByDate = (a, b) => {
+  let aDate = new Date(a.date).getTime();
+  let bDate = new Date(b.date).getTime();
+  if (aDate < bDate) return 1;
+  if (aDate > bDate) return -1;
+  return 0;
+};
+
 class ReportList extends React.Component {
   constructor(props) {
     super(props);
@@ -19,37 +42,25 @@ class ReportList extends React.Component {
 
       // Only fetch the newest ones
       reportLines = reportLines
-        .sort(function(a, b) {
-          let aTimestamp = parseInt(
-            a.substring(a.lastIndexOf('-') + 1, a.lastIndexOf('.json')),
-            10
-          );
-          let bTimestamp = parseInt(
-            b.substring(b.lastIndexOf('-') + 1, b.lastIndexOf('.json')),
-            10
-          );
-
-          if (aTimestamp < bTimestamp) return 1;
-          if (aTimestamp > bTimestamp) return -1;
-          return 0;
-        })
-        .slice(0, MAX_REPORTS)
+        .sort(sortReportLiens)
         .filter(reportLocation => {
           return this.state.reportLocations.indexOf(reportLocation) === -1;
-        });
+        })
+        .slice(0, MAX_REPORTS);
 
-      self.setState({
-        reportLocations: [...self.state.reportLocations, ...reportLines]
+      this.setState({
+        reportLocations: [...this.state.reportLocations, ...reportLines]
       });
 
       let promiseArray = reportLines.map(reportLocation =>
         axios.get(BASE_URI + '/' + reportLocation)
       );
+
       axios.all(promiseArray).then(results => {
         const newReports = [];
         results.forEach(result => {
           let found = false;
-          self.state.reports.forEach(existingReport => {
+          this.state.reports.forEach(existingReport => {
             if (existingReport.date === result.data.date) {
               found = true;
             }
@@ -59,24 +70,18 @@ class ReportList extends React.Component {
           }
         });
         // If adding reports, sort all and keep the newest ones
-        let newState = [...self.state.reports, ...newReports]
-          .sort(function(a, b) {
-            let aDate = new Date(a.date).getTime();
-            let bDate = new Date(b.date).getTime();
-            if (aDate < bDate) return 1;
-            if (aDate > bDate) return -1;
-            return 0;
-          })
+        let newReportsState = [...this.state.reports, ...newReports]
+          .sort(sortByDate)
           .slice(0, MAX_REPORTS);
 
-        self.setState({ reports: newState });
+        this.setState({ reports: newReportsState });
       });
     });
   }
 
   componentDidMount() {
-    var intervalId = setInterval(this.fetchReports.bind(this), 10000);
-    this.setState({ intervalId: intervalId });
+    const intervalId = setInterval(this.fetchReports.bind(this), 10000);
+    this.setState({ intervalId });
     this.fetchReports();
   }
 
@@ -86,19 +91,26 @@ class ReportList extends React.Component {
 
   render() {
     let reportComponents = [];
-    for (var i = 0; i < this.state.reports.length; i++) {
-      let report = this.state.reports[i];
-      reportComponents.push(<Report key={report.date} report={report} />);
-      if (report.failedCount > 0) {
+
+
+    for (let i = 0; i < this.state.reports.length; i++) {
+      const report = this.state.reports[i];
+
+      reportComponents.push(
+        <Report key={report.date} report={report}/>
+      );
+
+      if (report.failedCount) {
         reportComponents.push(
           <FailedSearches
-            key={report.date + '-failedSearches'}
+            key={report.date + '-failed-searches'}
             failedSearches={report.failedSearches}
             failedCount={report.failedCount}
           />
-        );
+        )
       }
     }
+
     if (reportComponents.length === 0) {
       reportComponents = null;
     }
@@ -109,14 +121,12 @@ class ReportList extends React.Component {
           className="pt-3 pb-2 pl-3"
           style={{
             background: 'rgb(24, 28, 86)',
-            color: 'white',
-            height: '65px'
+            color: '#fff',
+            height: 65
           }}
         >
           <Logo />
-          <h2
-            style={{ float: 'left', position: 'relative', marginLeft: '10px' }}
-          >
+          <h2 style={{ float: 'left', position: 'relative', marginLeft: 10 }}>
             OTP Travel Search Reports
           </h2>
         </div>
