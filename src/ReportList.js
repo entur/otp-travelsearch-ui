@@ -1,13 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import Report from './Report';
-import FailedSearches from './FailedSearches'
-import Logo from './Logo'
-
-const BASE_URI = "http://otpreport-test.entur.org/otp-travelsearch-qa/reports"
-const INDEX_URI = BASE_URI + "/index"
-const MAX_REPORTS = 10
-
+import FailedSearches from './FailedSearches';
+import Logo from './Logo';
 
 class ReportList extends React.Component {
     constructor(props) {
@@ -16,10 +11,16 @@ class ReportList extends React.Component {
     }
 
     fetchReports() {
+
+      // const {BASE_URI, MAX_REPORTS, INDEX_URI} = otp;
+
+      console.log("node")
+
+      console.log("window", window)
       const self = this
 
       axios.get(INDEX_URI)
-        .then(function (response) {
+        .then((response) => {
           let reportLines = response.data.split('\n')
 
           // Only fetch the newest ones
