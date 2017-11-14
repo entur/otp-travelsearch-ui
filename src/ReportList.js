@@ -3,6 +3,7 @@ import axios from 'axios';
 import Report from './Report';
 import FailedSearches from './FailedSearches';
 import Logo from './Logo';
+const { INDEX_URI, MAX_REPORTS, BASE_URI } = process.TSQA;
 
 class ReportList extends React.Component {
     constructor(props) {
@@ -12,15 +13,10 @@ class ReportList extends React.Component {
 
     fetchReports() {
 
-      // const {BASE_URI, MAX_REPORTS, INDEX_URI} = otp;
-
-      console.log("node")
-
-      console.log("window", window)
       const self = this
 
       axios.get(INDEX_URI)
-        .then((response) => {
+        .then(response => {
           let reportLines = response.data.split('\n')
 
           // Only fetch the newest ones
@@ -33,7 +29,7 @@ class ReportList extends React.Component {
             return 0;
           }).slice(0, MAX_REPORTS)
           .filter(reportLocation => {
-            return self.state.reportLocations.indexOf(reportLocation) === -1
+            return this.state.reportLocations.indexOf(reportLocation) === -1
           })
 
           self.setState({reportLocations: [...self.state.reportLocations, ...reportLines]})

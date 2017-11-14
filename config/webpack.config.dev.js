@@ -102,13 +102,6 @@ module.exports = {
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
-      new webpack.DefinePlugin({
-
-        'NODE_ENV': JSON.stringify('development'),
-        'BASE_URI': JSON.stringify('BASE_URI'),
-        'INDEX_URI': INDEX_URI,
-        'MAX_REPORTS': MAX_REPORTS,
-      }),
     ],
   },
   module: {
@@ -238,6 +231,13 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
+    new webpack.DefinePlugin({
+      'process.TSQA': {
+        'BASE_URI': JSON.stringify(BASE_URI),
+        'INDEX_URI': JSON.stringify(INDEX_URI),
+        'MAX_REPORTS': JSON.stringify(MAX_REPORTS),
+      }
+    }),
     new webpack.DefinePlugin(env.stringified),
     // This is necessary to emit hot updates (currently CSS only):
     new webpack.HotModuleReplacementPlugin(),

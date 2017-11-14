@@ -105,14 +105,6 @@ module.exports = {
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
-      new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-        BASE_URI: BASE_URI,
-        INDEX_URI: INDEX_URI,
-        MAX_REPORTS: MAX_REPORTS,
-      },
-    }),
     ],
   },
   module: {
@@ -268,6 +260,13 @@ module.exports = {
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
+    new webpack.DefinePlugin({
+      'process.TSQA': {
+        'BASE_URI': JSON.stringify(BASE_URI),
+        'INDEX_URI': JSON.stringify(INDEX_URI),
+        'MAX_REPORTS': JSON.stringify(MAX_REPORTS),
+      }
+    }),
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
       compress: {
