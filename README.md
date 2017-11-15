@@ -18,14 +18,14 @@ REPORT_BASE_URI="http://otpreport-test.entur.org/otp-travelsearch-qa/reports" ya
 ```
 
 
-## Upload to gcp after build command is executed
+## Upload to gcp after build command above is executed
 
-### Test
+### Development
 ```
 ./upload_gcp.sh gs://otpreport-test.entur.org/otp-travelsearch-qa
 ```
 
-### Prod
+### Production
 ```
 ./upload_gcp.sh gs://otpreport.entur.org/otp-travelsearch-qa
 ```
