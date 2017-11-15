@@ -5,7 +5,7 @@ import FailedSearches from './FailedSearches';
 import Logo from './Logo';
 const { INDEX_URI, MAX_REPORTS, BASE_URI } = process.TSQA;
 
-const sortReportLiens = (a, b) => {
+const sortReportLines = (a, b) => {
   const aTimestamp = parseInt(
     a.substring(a.lastIndexOf('-') + 1, a.lastIndexOf('.json')),
     10
@@ -40,7 +40,7 @@ class ReportList extends React.Component {
 
       // Only fetch the newest ones
       reportLines = reportLines
-        .sort(sortReportLiens)
+        .sort(sortReportLines)
         .filter(reportLocation => {
           return this.state.reportLocations.indexOf(reportLocation) === -1;
         })
