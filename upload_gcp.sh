@@ -10,7 +10,7 @@ fi
 echo "Uploading build directory content to $BASE_URI"
 gsutil -h "Cache-Control:no-cache" -m cp -r build/* $BASE_URI
 
-# AVoid doing this for reports directory,
-
 gsutil -m acl ch -u AllUsers:R $BASE_URI/*
+
+# Avoid doing this for the reports directory,
 gsutil -m acl ch -r -u AllUsers:R $BASE_URI/static/
