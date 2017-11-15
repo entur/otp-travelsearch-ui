@@ -11,3 +11,8 @@ Build
 ```
 yarn build
 ```
+
+Build with other base uri for reports:
+```
+REPORT_BASE_URI="http://otpreport-test.entur.org/otp-travelsearch-qa/reports" yarn build
+```

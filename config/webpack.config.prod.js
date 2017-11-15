@@ -12,7 +12,8 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
-const BASE_URI = "http://otpreport.entur.org/otp-travelsearch-qa/reports";
+const BASE_URI = !process.env.REPORT_BASE_URI ? "http://otpreport.entur.org/otp-travelsearch-qa/reports" : process.env.REPORT_BASE_URI;
+
 const INDEX_URI = BASE_URI + "/index";
 const MAX_REPORTS = 10;
 
