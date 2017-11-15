@@ -15,7 +15,7 @@ const getClientEnvironment = require('./env');
 const BASE_URI = !process.env.REPORT_BASE_URI ? "http://otpreport.entur.org/otp-travelsearch-qa/reports" : process.env.REPORT_BASE_URI;
 
 const INDEX_URI = BASE_URI + "/index";
-const MAX_REPORTS = 10;
+const MAX_REPORTS = 50;
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -264,8 +264,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.TSQA': {
         'BASE_URI': JSON.stringify(BASE_URI),
-        'INDEX_URI': JSON.stringify(INDEX_URI),
-        'MAX_REPORTS': JSON.stringify(MAX_REPORTS),
+        'INDEX_URI': JSON.stringify(INDEX_URI)
       }
     }),
     // Minify the code.

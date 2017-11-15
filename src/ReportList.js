@@ -3,7 +3,9 @@ import axios from 'axios';
 import Report from './Report';
 import FailedSearches from './FailedSearches';
 import Logo from './Logo';
-const { INDEX_URI, MAX_REPORTS, BASE_URI } = process.TSQA;
+
+const MAX_REPORTS = 50;
+const { INDEX_URI, BASE_URI } = process.TSQA;
 
 const sortReportLines = (a, b) => {
   const aTimestamp = parseInt(

@@ -14,7 +14,6 @@ const paths = require('./paths');
 
 const BASE_URI = "http://otpreport-test.entur.org/otp-travelsearch-qa/reports";
 const INDEX_URI = BASE_URI + "/index";
-const MAX_REPORTS = 10;
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -234,8 +233,7 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.TSQA': {
         'BASE_URI': JSON.stringify(BASE_URI),
-        'INDEX_URI': JSON.stringify(INDEX_URI),
-        'MAX_REPORTS': JSON.stringify(MAX_REPORTS),
+        'INDEX_URI': JSON.stringify(INDEX_URI)
       }
     }),
     new webpack.DefinePlugin(env.stringified),
