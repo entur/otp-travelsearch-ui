@@ -35,8 +35,6 @@ class ReportList extends React.Component {
   }
 
   fetchReports() {
-    const self = this;
-
     axios.get(INDEX_URI).then(response => {
       let reportLines = response.data.split('\n');
 
