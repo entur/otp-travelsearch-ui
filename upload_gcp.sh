@@ -8,7 +8,7 @@ if [ -z "$BASE_URI" ]; then
 fi
 
 echo "Uploading build directory content to $BASE_URI"
-gsutil -m cp -r build/* $BASE_URI
+gsutil -h "Cache-Control:no-cache" -m cp -r build/* $BASE_URI
 
 # AVoid doing this for reports directory,
 
