@@ -1,7 +1,6 @@
 import React from 'react';
 
-const SHAMASH_OTP = "https://api-test.entur.org/doc/shamash-otp/?query="
-
+const { SHAMASH_OTP } = process.TSQA;
 class FailedSearch extends React.Component {
 
   render() {

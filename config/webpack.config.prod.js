@@ -13,6 +13,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const BASE_URI = !process.env.REPORT_BASE_URI ? "http://otpreport.entur.org/otp-travelsearch-qa/reports" : process.env.REPORT_BASE_URI;
+const SHAMASH_OTP = !process.env.SHAMASH_OTP ? "https://api.entur.org/doc/shamash-otp/?query=" : process.env.SHAMASH_OTP;
 
 const INDEX_URI = BASE_URI + "/index";
 const MAX_REPORTS = 50;
@@ -264,7 +265,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.TSQA': {
         'BASE_URI': JSON.stringify(BASE_URI),
-        'INDEX_URI': JSON.stringify(INDEX_URI)
+        'INDEX_URI': JSON.stringify(INDEX_URI),
+        'SHAMASH_OTP': JSON.stringify(SHAMASH_OTP)
       }
     }),
     // Minify the code.
