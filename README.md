@@ -12,20 +12,24 @@ yarn start
 yarn build
 ```
 
-## Build with other base uri for reports:
+## Build for specific environment for reports.
 ```
-REPORT_BASE_URI="http://otpreport-test.entur.org/otp-travelsearch-qa/reports" yarn build
+DEPLOY_ENV=neon yarn build
 ```
-
 
 ## Upload to gcp after build command above is executed
 
-### Development
+### Test/carbon
 ```
 ./upload_gcp.sh gs://otpreport-test.entur.org/otp-travelsearch-qa
 ```
 
-### Production
+### Production/stage
+```
+./upload_gcp.sh gs://otpreport-stage.entur.org/otp-travelsearch-qa
+```
+
+### Production/neon
 ```
 ./upload_gcp.sh gs://otpreport.entur.org/otp-travelsearch-qa
 ```

@@ -11,9 +11,11 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
-
-const BASE_URI = "http://otpreport-test.entur.org/otp-travelsearch-qa/reports";
-const INDEX_URI = BASE_URI + "/index";
+const config = require('./config');
+const buildEnv = process.env.BUILD_ENV;
+console.log("buildEnv", buildEnv);
+console.log("conf ", config[buildEnv].REPORT_BASE_URI);
+console.log("conf ", config[buildEnv].SHAMASH_OTP);
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -115,16 +117,14 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
+        use: [{
+          options: {
+            formatter: eslintFormatter,
+            eslintPath: require.resolve('eslint'),
 
-            },
-            loader: require.resolve('eslint-loader'),
           },
-        ],
+          loader: require.resolve('eslint-loader'),
+        }, ],
         include: paths.appSrc,
       },
       {
@@ -232,8 +232,8 @@ module.exports = {
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
     new webpack.DefinePlugin({
       'process.TSQA': {
-        'BASE_URI': JSON.stringify(BASE_URI),
-        'INDEX_URI': JSON.stringify(INDEX_URI)
+        'REPORT_BASE_URI': JSON.stringify(config[buildEnv].REPORT_BASE_URI),
+        'SHAMASH_OTP': JSON.stringify(config[buildEnv].SHAMASH_OTP)
       }
     }),
     new webpack.DefinePlugin(env.stringified),
