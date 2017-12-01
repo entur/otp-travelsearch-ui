@@ -5,8 +5,9 @@ import FailedSearches from './FailedSearches';
 import Logo from './Logo';
 
 const MAX_REPORTS = 50;
-const { REPORT_BASE_URI } = process.TSQA;
-const INDEX_URI = REPORT_BASE_URI + "/index";
+const { REPORT_BASE_URI, REPORT_DATA_FOLDER } = process.TSQA;
+const REPORT_PATH = REPORT_BASE_URI + "/" + REPORT_DATA_FOLDER;
+const INDEX_URI = REPORT_PATH + "/index";
 
 const sortReportLines = (a, b) => {
   const aTimestamp = parseInt(
@@ -54,7 +55,7 @@ class ReportList extends React.Component {
       });
 
       let promiseArray = reportLines.map(reportLocation =>
-        axios.get(REPORT_BASE_URI + '/' + reportLocation)
+        axios.get(REPORT_PATH + '/' + reportLocation)
       );
 
       axios.all(promiseArray).then(results => {
