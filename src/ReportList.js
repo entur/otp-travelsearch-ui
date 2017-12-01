@@ -98,12 +98,29 @@ class ReportList extends React.Component {
     for (let i = 0; i < this.state.reports.length; i++) {
       const report = this.state.reports[i];
 
-      // Fallback to old module-resolution
-      let travelSearchReport = report.numberOfSearches ? report : report.travelSearch;
+      // Fallback to old model
+      let travelSearchReport = report.travelSearch ? report.travelSearch : report;
 
       reportComponents.push(
         <Report key={report.date} report={travelSearchReport} date={report.date}/>
       );
+
+      if(report.stopTimes) {
+        let stopTimesReport = report.stopTimes;
+        reportComponents.push(
+          <Report key={report.date} report={stopTimesReport} date={"stop times"}/>
+        );
+        // if (stopTimesReport.failedCount) {
+        //   reportComponents.push(
+        //     <FailedSearches
+        //       key={stopTimesReport.date + '-failed-searches'}
+        //       failedSearches={stopTimesReport.failedSearches}
+        //       failedCount={stopTimesReport.failedCount}
+        //     />
+        //   )
+        // }
+      }
+
 
       if (travelSearchReport.failedCount) {
         reportComponents.push(
