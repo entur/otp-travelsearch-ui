@@ -14,7 +14,7 @@ yarn build
 
 ## Build for specific environment for reports.
 ```
-DEPLOY_ENV=neon yarn build
+BUILD_ENV=neon yarn build
 ```
 
 ## Upload to gcp after build command above is executed
