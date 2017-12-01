@@ -7,7 +7,7 @@ for env in carbon radon neon; do
 
   gcp_context.sh $env &&
   BUILD_ENV=$env yarn build &&
-  ./upload_gcp.sh $REPORT_BASE_URI
+  ./upload_gcp.sh $REPORT_BASE_URI &&
 
   echo "------ $env done ------"
   echo
