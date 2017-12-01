@@ -12,7 +12,8 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const config = require('./config');
-const buildEnv = process.env.BUILD_ENV;
+
+const buildEnv = process.env.BUILD_ENV ? process.env.BUILD_ENV : "carbon";
 console.log("buildEnv", buildEnv);
 console.log("conf ", config[buildEnv].REPORT_BASE_URI);
 console.log("conf ", config[buildEnv].SHAMASH_OTP);
