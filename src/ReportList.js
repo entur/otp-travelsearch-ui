@@ -97,16 +97,19 @@ class ReportList extends React.Component {
     for (let i = 0; i < this.state.reports.length; i++) {
       const report = this.state.reports[i];
 
+      // Fallback to old module-resolution
+      let travelSearchReport = report.numberOfSearches ? report : report.travelSearch;
+
       reportComponents.push(
-        <Report key={report.date} report={report}/>
+        <Report key={report.date} report={travelSearchReport} date={report.date}/>
       );
 
-      if (report.failedCount) {
+      if (travelSearchReport.failedCount) {
         reportComponents.push(
           <FailedSearches
             key={report.date + '-failed-searches'}
-            failedSearches={report.failedSearches}
-            failedCount={report.failedCount}
+            failedSearches={travelSearchReport.failedSearches}
+            failedCount={travelSearchReport.failedCount}
           />
         )
       }
