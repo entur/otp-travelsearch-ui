@@ -5,3 +5,12 @@ body {
 .borderless td, .borderless th, .borderless tr, .borderless table {
   border: none;
 }
+
+.test-group {
+  cursor: pointer;
+  margin: 3px;
+}
+
+.mark:hover {
+  background-color: gray;
+}

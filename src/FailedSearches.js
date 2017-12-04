@@ -33,7 +33,7 @@ class FailedSearches extends React.Component {
 
   render() {
     const report = this.props.report;
-    console.log(report);
+
     if (!this.state.expanded) {
       return (
         <tr className="borderless">
