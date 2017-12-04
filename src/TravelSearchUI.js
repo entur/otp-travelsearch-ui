@@ -5,7 +5,7 @@ import { IntlProvider } from 'react-intl';
 class TravelSearchUI extends Component {
   render() {
     return (
-      <IntlProvider>
+      <IntlProvider locale="en">
         <div className="TravelSearchUI">
           <ReportList />
         </div>
