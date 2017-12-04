@@ -17,7 +17,7 @@ class FailedSearchGroup extends React.Component {
   render() {
     const failedSearches = this.props.failedSearchGroup.map(
       (failedSearch, index) =>
-        <FailedSearch key={index} failedSearch={failedSearch} />
+        <FailedSearch key={index} failedSearch={failedSearch} type={this.props.type} />
     );
     const count = failedSearches.length;
     let details;
