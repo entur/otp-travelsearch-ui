@@ -1,17 +1,20 @@
 import React from 'react';
 
+import ReportSummary from './ReportSummary';
+
 class Report extends React.Component {
   render() {
-    const report = this.props.report
-    const date = this.props.date
+    // Fallback to old model
+    const travelSearchReport = this.props.report.travelSearch ? this.props.report.travelSearch : this.props.report;
+    const stopTimesReport = this.props.report.stopTimes;
+    const date = this.props.date;
+    const stopTimesReportComponent = stopTimesReport ? <ReportSummary report={stopTimesReport} /> : null;
 
     return (
-        <tr className="active">
+        <tr>
           <td>{date}</td>
-          <td>{report.failedPercentage.toFixed(2)}%</td>
-          <td>{report.numberOfSearches}</td>
-          <td>{report.secondsTotal.toFixed(2)}</td>
-          <td>{report.secondsAverage.toFixed(2)}</td>
+          {<ReportSummary report={travelSearchReport}/>}
+          {stopTimesReportComponent}
         </tr>
      )
   }

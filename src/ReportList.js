@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import Report from './Report';
-import FailedSearches from './FailedSearches';
 import Logo from './Logo';
 
 const MAX_REPORTS = 50;
@@ -45,10 +44,10 @@ class ReportList extends React.Component {
       // Only fetch the newest ones
       reportLines = reportLines
         .sort(sortReportLines)
-        .slice(0, MAX_REPORTS)
         .filter(reportLocation => {
           return this.state.reportLocations.indexOf(reportLocation) === -1;
-        });
+        })
+        .slice(0, MAX_REPORTS);
 
       this.setState({
         reportLocations: [...this.state.reportLocations, ...reportLines]
@@ -82,7 +81,7 @@ class ReportList extends React.Component {
   }
 
   componentDidMount() {
-    const intervalId = setInterval(this.fetchReports.bind(this), 10000);
+    const intervalId = setInterval(this.fetchReports.bind(this), 4000);
     this.setState({ intervalId });
     this.fetchReports();
   }
@@ -94,43 +93,12 @@ class ReportList extends React.Component {
   render() {
     let reportComponents = [];
 
-
     for (let i = 0; i < this.state.reports.length; i++) {
       const report = this.state.reports[i];
 
-      // Fallback to old model
-      let travelSearchReport = report.travelSearch ? report.travelSearch : report;
-
       reportComponents.push(
-        <Report key={report.date} report={travelSearchReport} date={report.date}/>
+        <Report key={report.date} report={report} date={report.date}/>
       );
-
-      if(report.stopTimes) {
-        let stopTimesReport = report.stopTimes;
-        reportComponents.push(
-          <Report key={report.date} report={stopTimesReport} date={"stop times"}/>
-        );
-        // if (stopTimesReport.failedCount) {
-        //   reportComponents.push(
-        //     <FailedSearches
-        //       key={stopTimesReport.date + '-failed-searches'}
-        //       failedSearches={stopTimesReport.failedSearches}
-        //       failedCount={stopTimesReport.failedCount}
-        //     />
-        //   )
-        // }
-      }
-
-
-      if (travelSearchReport.failedCount) {
-        reportComponents.push(
-          <FailedSearches
-            key={report.date + '-failed-searches'}
-            failedSearches={travelSearchReport.failedSearches}
-            failedCount={travelSearchReport.failedCount}
-          />
-        )
-      }
     }
 
     if (reportComponents.length === 0) {
@@ -157,10 +125,14 @@ class ReportList extends React.Component {
           <tbody>
             <tr>
               <th>Date</th>
-              <th>Failed percentage</th>
-              <th>Number of searches</th>
-              <th>Seconds total</th>
-              <th>Seconds average</th>
+              <th>Travel searches failed</th>
+              <th>Travel searches count</th>
+              <th>Travel searches seconds total</th>
+              <th>Travel searches seconds average</th>
+              <th>Stop times failed</th>
+              <th>Stop times count</th>
+              <th>Stop times seconds total</th>
+              <th>Stop times seconds average</th>
             </tr>
             {reportComponents}
           </tbody>
