@@ -3,20 +3,27 @@ import React from 'react';
 const { SHAMASH_OTP } = process.TSQA;
 class FailedSearch extends React.Component {
 
+  generateShamashHref() {
+    // Typo in qa project for prop otpQuery
+    const otpQuery = this.props.failedSearch.otpQuery ? this.props.failedSearch.otpQuery : this.props.failedSearch.otpquery;
+    let shamashHref = SHAMASH_OTP + "/?query=" +  encodeURIComponent(otpQuery) + "&variables=";
+    if(this.props.failedSearch.otpVariables) {
+      const otpVariables = this.props.failedSearch.otpVariables;
+      // Use json stringify for variables. Could have been stringified in otp-travelsearch-qa
+      shamashHref += encodeURIComponent(JSON.stringify(otpVariables));
+    }
+    return shamashHref;
+  }
+
   render() {
     const reportType = this.props.type;
     const failedSearch = this.props.failedSearch
-    // Typo in qa project for prop otpQuery
-    const otpQuery = this.props.failedSearch.otpQuery ? this.props.failedSearch.otpQuery : this.props.failedSearch.otpquery;
-    let shamashHref = SHAMASH_OTP + "/?query?" +  encodeURIComponent(otpQuery);
-    if(this.props.failedSearch.otpVariables) {
-      shamashHref += "&variables=" + encodeURIComponent(this.props.failedSearch.otpVariables);
-    }
+    const shamashHref = this.generateShamashHref();
 
     let linkText;
-    if(reportType == "travelSearch") {
+    if(reportType === "travelSearch") {
       linkText = <span>{failedSearch.search.fromPlace} (failedSearch.search.origin) to {failedSearch.search.toPlace} (failedSearch.search.destination)</span>;
-    } else if(reportType == "stopTimes") {
+    } else if(reportType === "stopTimes") {
       linkText = <span>{failedSearch.search.stopPlaceId} ({failedSearch.search.stopPlaceName})</span>;
     }
 
