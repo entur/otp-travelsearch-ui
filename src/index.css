@@ -2,7 +2,11 @@ body {
   background-color: black;
   color: white;
 }
-.borderless td, .borderless th {
+.borderless td, .borderless th, .borderless tr, .borderless table {
   border: none;
-  padding: 0em;
+}
+
+.border-top tr {
+  border-top: 1px solid red;
+  color:green;
 }

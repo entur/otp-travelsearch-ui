@@ -33,7 +33,7 @@ class FailedSearches extends React.Component {
 
     if (!this.state.expanded) {
       return (
-        <tr>
+        <tr className="borderless">
           <td colSpan="5">
             <button
               style={{ cursor: 'pointer' }}
@@ -66,8 +66,8 @@ class FailedSearches extends React.Component {
       }
 
       return (
-        <tr>
-          <td colSpan="5">
+        <tr className="borderless">
+          <td colSpan="9">
             <button
               style={{ cursor: 'pointer' }}
               className="btn btn-success"

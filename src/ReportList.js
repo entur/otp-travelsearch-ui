@@ -44,10 +44,10 @@ class ReportList extends React.Component {
       // Only fetch the newest ones
       reportLines = reportLines
         .sort(sortReportLines)
+        .slice(0, MAX_REPORTS)
         .filter(reportLocation => {
           return this.state.reportLocations.indexOf(reportLocation) === -1;
-        })
-        .slice(0, MAX_REPORTS);
+        });
 
       this.setState({
         reportLocations: [...this.state.reportLocations, ...reportLines]
