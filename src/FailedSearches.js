@@ -20,15 +20,27 @@ class FailedSearches extends React.Component {
   groupFailedSearches() {
     const report = this.props.report;
 
-    let groups = {};
+    let groups = [];
     for (let i = 0; i < report.failedSearches.length; i++) {
-      let  groupName = report.failedSearches[i].search.description;
-      if (!groups[groupName]) {
-        groups[groupName] = [];
+      let groupName = report.failedSearches[i].search.description;
+
+      let existingGroup = groups.find(group => {
+        return group.name === groupName;
+      })
+
+      if(existingGroup) {
+        existingGroup.members.push(report.failedSearches[i]);
+      } else {
+        groups.push({name: groupName, members: [report.failedSearches[i]]});
       }
-      groups[groupName].push(report.failedSearches[i]);
     }
-    return groups;
+    return this.sortGroupsDescending(groups);
+  }
+
+  sortGroupsDescending(groups) {
+    return groups.sort((a, b) =>  {
+      return b.members.length - a.members.length;
+    })
   }
 
   render() {
@@ -51,22 +63,17 @@ class FailedSearches extends React.Component {
         </tr>
       );
     } else {
-      const groupedFailedSearches = this.groupFailedSearches(
-        report.failedSearches
-      );
 
-      const groupedFailedSearchesComponents = [];
-
-      for (let groupName in groupedFailedSearches) {
-        groupedFailedSearchesComponents.push(
-          <FailedSearchGroup
-            key={groupName}
-            groupName={groupName}
-            type={report.type}
-            failedSearchGroup={groupedFailedSearches[groupName]}
-          />
-        );
-      }
+      const groupedFailedSearches = this.groupFailedSearches(report.failedSearches);
+      const groupedFailedSearchesComponents = groupedFailedSearches
+                  .map(group => {
+                    return <FailedSearchGroup
+                      key={group.name}
+                      groupName={group.name}
+                      type={report.type}
+                      failedSearchGroup={group.members}
+                    />
+                  });
 
       return (
         <tr className="borderless">
