@@ -5,8 +5,3 @@ body {
 .borderless td, .borderless th, .borderless tr, .borderless table {
   border: none;
 }
-
-.border-top tr {
-  border-top: 1px solid red;
-  color:green;
-}

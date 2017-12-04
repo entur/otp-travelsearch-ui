@@ -3,6 +3,19 @@ import ReportSummary from './ReportSummary';
 import FailedSearches from './FailedSearches';
 
 class Report extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+      expanded: false
+    };
+  }
+
+  expand() {
+    this.setState({ expanded: !this.state.expanded });
+  }
+
+
   render() {
     // Fallback to old model
     const travelSearchReport = this.props.report.travelSearch ? this.props.report.travelSearch : this.props.report;
@@ -12,30 +25,32 @@ class Report extends React.Component {
 
     const rows = [];
     rows.push(
-      <tr key={date}>
+      <tr key={date} onClick={() => {this.expand();}} style={{cursor: "pointer"}}>
         <td>{date}</td>
         {<ReportSummary report={travelSearchReport}/>}
         {stopTimesReportComponent}
       </tr>);
 
-    travelSearchReport.type = "travelSearch";
-    rows.push(
-      <FailedSearches
-        key={date + '-failed-travel-searches'}
-        failedSearches={travelSearchReport.failedSearches}
-        failedCount={travelSearchReport.failedCount}
-      />
-    )
-
-    if(stopTimesReport) {
-      stopTimesReport.type="stopTimes";
+    if(this.state.expanded) {
+      travelSearchReport.type = "travelSearch";
       rows.push(
         <FailedSearches
-          key={date + '-failed-stop-times'}
-          failedSearches={stopTimesReport.failedSearches}
-          failedCount={stopTimesReport.failedCount}
+          key={date + '-failed-travel-searches'}
+          failedSearches={travelSearchReport.failedSearches}
+          failedCount={travelSearchReport.failedCount}
         />
       )
+
+      if(stopTimesReport) {
+        stopTimesReport.type="stopTimes";
+        rows.push(
+          <FailedSearches
+            key={date + '-failed-stop-times'}
+            failedSearches={stopTimesReport.failedSearches}
+            failedCount={stopTimesReport.failedCount}
+          />
+        )
+      }
     }
 
     return (
