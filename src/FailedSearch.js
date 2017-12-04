@@ -22,7 +22,7 @@ class FailedSearch extends React.Component {
 
     let linkText;
     if(reportType === "travelSearch") {
-      linkText = <span>{failedSearch.search.fromPlace} (failedSearch.search.origin) to {failedSearch.search.toPlace} (failedSearch.search.destination)</span>;
+      linkText = <span>{failedSearch.search.fromPlace} {failedSearch.search.origin} to {failedSearch.search.toPlace} {failedSearch.search.destination}</span>;
     } else if(reportType === "stopTimes") {
       linkText = <span>{failedSearch.search.stopPlaceId} ({failedSearch.search.stopPlaceName})</span>;
     }
