@@ -25,8 +25,8 @@ class Report extends React.Component {
 
     const rows = [];
     rows.push(
-      <tr key={date} onClick={() => {this.expand();}} style={{cursor: "pointer"}}>
-        <td>{date}</td>
+      <tr key={date} onClick={() => {this.expand();}} className="report-row">
+        <td className="report-date">{date}</td>
         {<ReportSummary report={travelSearchReport}/>}
         {stopTimesReportComponent}
       </tr>);

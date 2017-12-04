@@ -2,6 +2,7 @@ body {
   background-color: black;
   color: white;
 }
+
 .borderless td, .borderless th, .borderless tr, .borderless table {
   border: none;
 }
@@ -13,4 +14,25 @@ body {
 
 .mark:hover {
   background-color: gray;
+}
+
+.report-row {
+  -moz-transition: all .2s ease-in;
+  -o-transition: all .2s ease-in;
+  -webkit-transition: all .2s ease-in;
+  transition: all .2s ease-in;
+}
+
+.report-row:hover {
+  background: rgb(24, 28, 86);
+  cursor: pointer;
+}
+
+.report-search-count {
+  color: #5ac39a;
+}
+
+.report-date {
+  font-size: smaller;
+  font-weight: bold;
 }

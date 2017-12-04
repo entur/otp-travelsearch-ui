@@ -97,7 +97,7 @@ class ReportList extends React.Component {
       const report = this.state.reports[i];
 
       reportComponents.push(
-        <Report key={report.date} report={report} date={report.date}/>
+        <Report key={report.date} report={report} date={report.date} className="report-date"/>
       );
     }
 
@@ -121,7 +121,7 @@ class ReportList extends React.Component {
           </h2>
         </div>
 
-        <table className="table table-hover table-condensed my-4 mx-4">
+        <table className="table table-condensed my-4 mx-4">
           <tbody>
             <tr>
               <th>Date</th>
