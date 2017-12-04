@@ -1,4 +1,6 @@
 import React from 'react';
+import {FormattedRelative} from 'react-intl';
+
 import ReportSummary from './ReportSummary';
 import FailedSearches from './FailedSearches';
 
@@ -15,7 +17,6 @@ class Report extends React.Component {
     this.setState({ expanded: !this.state.expanded });
   }
 
-
   render() {
     // Fallback to old model
     const travelSearchReport = this.props.report.travelSearch ? this.props.report.travelSearch : this.props.report;
@@ -26,7 +27,9 @@ class Report extends React.Component {
     const rows = [];
     rows.push(
       <tr key={date} onClick={() => {this.expand();}} className="report-row">
-        <td className="report-date">{date}</td>
+        <td className="report-date">
+          <FormattedRelative value={date} />
+        </td>
         {<ReportSummary report={travelSearchReport}/>}
         {stopTimesReportComponent}
       </tr>);
