@@ -18,19 +18,22 @@ class FailedSearches extends React.Component {
   }
 
   groupFailedSearches() {
+    const report = this.props.report;
+
     let groups = {};
-    for (let i = 0; i < this.props.failedSearches.length; i++) {
-      let  groupName = this.props.failedSearches[i].search.description;
+    for (let i = 0; i < report.failedSearches.length; i++) {
+      let  groupName = report.failedSearches[i].search.description;
       if (!groups[groupName]) {
         groups[groupName] = [];
       }
-      groups[groupName].push(this.props.failedSearches[i]);
+      groups[groupName].push(report.failedSearches[i]);
     }
     return groups;
   }
 
   render() {
-
+    const report = this.props.report;
+    console.log(report);
     if (!this.state.expanded) {
       return (
         <tr className="borderless">
@@ -42,15 +45,14 @@ class FailedSearches extends React.Component {
                 this.expand();
               }}
             >
-              {this.props.failedCount}
+              {report.failedCount} failed {report.type} tests
             </button>
-            {' '}failed
           </td>
         </tr>
       );
     } else {
       const groupedFailedSearches = this.groupFailedSearches(
-        this.props.failedSearches
+        report.failedSearches
       );
 
       const groupedFailedSearchesComponents = [];

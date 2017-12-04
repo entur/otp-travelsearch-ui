@@ -36,8 +36,7 @@ class Report extends React.Component {
       rows.push(
         <FailedSearches
           key={date + '-failed-travel-searches'}
-          failedSearches={travelSearchReport.failedSearches}
-          failedCount={travelSearchReport.failedCount}
+          report={travelSearchReport}
         />
       )
 
@@ -46,8 +45,7 @@ class Report extends React.Component {
         rows.push(
           <FailedSearches
             key={date + '-failed-stop-times'}
-            failedSearches={stopTimesReport.failedSearches}
-            failedCount={stopTimesReport.failedCount}
+            report={stopTimesReport}
           />
         )
       }
