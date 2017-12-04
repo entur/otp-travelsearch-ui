@@ -8,7 +8,10 @@ class FailedSearch extends React.Component {
     const failedSearch = this.props.failedSearch
     // Typo in qa project for prop otpQuery
     const otpQuery = this.props.failedSearch.otpQuery ? this.props.failedSearch.otpQuery : this.props.failedSearch.otpquery;
-    const shamashHref = SHAMASH_OTP + encodeURIComponent(otpQuery)
+    let shamashHref = SHAMASH_OTP + "/?query?" +  encodeURIComponent(otpQuery);
+    if(this.props.failedSearch.otpVariables) {
+      shamashHref += "&variables=" + encodeURIComponent(this.props.failedSearch.otpVariables);
+    }
 
     let linkText;
     if(reportType == "travelSearch") {
