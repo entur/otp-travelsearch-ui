@@ -18,30 +18,24 @@ class FailedSearches extends React.Component {
   }
 
   groupFailedSearches() {
-    const report = this.props.report;
-
-    let groups = [];
-    for (let i = 0; i < report.failedSearches.length; i++) {
-      if(report.failedSearches[i]) {
-        let groupName = report.failedSearches[i].search.description;
-
-        let existingGroup = groups.find(group => {
-          return group.name === groupName;
-        })
-
-        if(existingGroup) {
-          existingGroup.members.push(report.failedSearches[i]);
-        } else {
-          groups.push({name: groupName, members: [report.failedSearches[i]]});
-        }
+    const {report} = this.props;
+    return report.failedSearches.reduce((groups, failedSearch) => {
+      let groupName = failedSearch.search.description;
+      let existingGroup = groups.find(group => {
+        return group.name === groupName;
+      });
+      if (existingGroup) {
+        existingGroup.members.push(failedSearch);
+      } else {
+        groups.push({
+          name: groupName,
+          members: [failedSearch]
+        });
       }
-    }
-    return this.sortGroupsDescending(groups);
-  }
-
-  sortGroupsDescending(groups) {
-    return groups.sort((a, b) =>  {
-      return b.members.length - a.members.length;
+      return groups;
+    }, [])
+    .sort((a, b) =>  {
+      return a.members && b.members ? b.members.length - a.members.length : 0;
     })
   }
 
@@ -65,9 +59,7 @@ class FailedSearches extends React.Component {
         </tr>
       );
     } else {
-
-      const groupedFailedSearches = this.groupFailedSearches(report.failedSearches);
-      const groupedFailedSearchesComponents = groupedFailedSearches
+      const groupedFailedSearchesComponents = this.groupFailedSearches(report.failedSearches)
                   .map(group => {
                     return <FailedSearchGroup
                       key={group.name}
