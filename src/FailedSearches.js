@@ -22,16 +22,18 @@ class FailedSearches extends React.Component {
 
     let groups = [];
     for (let i = 0; i < report.failedSearches.length; i++) {
-      let groupName = report.failedSearches[i].search.description;
+      if(report.failedSearches[i]) {
+        let groupName = report.failedSearches[i].search.description;
 
-      let existingGroup = groups.find(group => {
-        return group.name === groupName;
-      })
+        let existingGroup = groups.find(group => {
+          return group.name === groupName;
+        })
 
-      if(existingGroup) {
-        existingGroup.members.push(report.failedSearches[i]);
-      } else {
-        groups.push({name: groupName, members: [report.failedSearches[i]]});
+        if(existingGroup) {
+          existingGroup.members.push(report.failedSearches[i]);
+        } else {
+          groups.push({name: groupName, members: [report.failedSearches[i]]});
+        }
       }
     }
     return this.sortGroupsDescending(groups);
