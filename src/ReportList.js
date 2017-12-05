@@ -81,7 +81,7 @@ class ReportList extends React.Component {
   }
 
   componentDidMount() {
-    const intervalId = setInterval(this.fetchReports.bind(this), 4000);
+    const intervalId = setInterval(this.fetchReports.bind(this), 40000);
     this.setState({ intervalId });
     this.fetchReports();
   }

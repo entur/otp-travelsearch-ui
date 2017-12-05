@@ -1,5 +1,7 @@
 import React from 'react';
 
+import ResponseViewer from './ResponseViewer';
+
 const { SHAMASH_OTP } = process.TSQA;
 class FailedSearch extends React.Component {
 
@@ -37,8 +39,12 @@ class FailedSearch extends React.Component {
         <td className="text-danger borderless" style={{"width": "20%"}}>
           {failedSearch.failMessage}
         </td>
-        <td className="text-warning borderless" onClick={() => console.log(failedSearch.response)} style={{"cursor": "pointer"}}>
-          {failedSearch.response.substring(0,100)}
+
+        <td className="text-warning borderless">
+          <ResponseViewer failedSearch={failedSearch} ref={instance => { this.child = instance; }}/>
+          <span onClick={() => this.child.open()} style={{"cursor": "pointer"}}>
+            {failedSearch.response.substring(0,100)}
+          </span>
         </td>
       </tr>
     )
