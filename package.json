@@ -2,6 +2,7 @@
   "name": "otp-travelsearch-ui",
   "version": "0.1.0",
   "homepage": ".",
+  "license": "EUPL-1.2",
   "dependencies": {
     "autoprefixer": "7.1.2",
     "axios": "^0.16.2",
