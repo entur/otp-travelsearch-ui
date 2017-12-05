@@ -79,7 +79,7 @@ class FailedSearches extends React.Component {
                 this.collapse()
               }}
             >
-              collapse
+              collapse {report.type} tests
             </button>
             {groupedFailedSearchesComponents}
           </td>
