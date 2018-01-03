@@ -268,6 +268,7 @@ module.exports = {
     new webpack.DefinePlugin(env.stringified),
     new webpack.DefinePlugin({
       'process.TSQA': {
+        'ENVIRONMENT': JSON.stringify(buildEnv),
         'REPORT_BASE_URI': JSON.stringify(config[buildEnv].REPORT_BASE_URI),
         'REPORT_DATA_FOLDER': JSON.stringify(config[buildEnv].REPORT_DATA_FOLDER),
         'SHAMASH_OTP': JSON.stringify(config[buildEnv].SHAMASH_OTP)

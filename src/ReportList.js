@@ -17,7 +17,7 @@ import Report from './Report';
 import Logo from './Logo';
 
 const MAX_REPORTS = 50;
-const { REPORT_BASE_URI, REPORT_DATA_FOLDER } = process.TSQA;
+const { REPORT_BASE_URI, REPORT_DATA_FOLDER, ENVIRONMENT } = process.TSQA;
 const REPORT_PATH = REPORT_BASE_URI + "/" + REPORT_DATA_FOLDER;
 const INDEX_URI = REPORT_PATH + "/index";
 
@@ -132,6 +132,7 @@ class ReportList extends React.Component {
           <h2 style={{ float: 'left', position: 'relative', marginLeft: 10 }}>
             OTP Travel Search Reports
           </h2>
+          <small className="px-2">{ENVIRONMENT}</small>
         </div>
 
         <table className="table table-condensed my-4 mx-4">
