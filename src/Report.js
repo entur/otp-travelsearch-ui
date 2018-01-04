@@ -16,6 +16,7 @@ import {FormattedRelative} from 'react-intl';
 
 import ReportSummary from './ReportSummary';
 import FailedSearches from './FailedSearches';
+import ExecutionTimeReport from './ExecutionTimeReport'
 
 class Report extends React.Component {
 
@@ -65,6 +66,9 @@ class Report extends React.Component {
           />
         )
       }
+      rows.push(
+        <ExecutionTimeReport travelSearchReport={travelSearchReport} />
+      )
     }
 
     return (
