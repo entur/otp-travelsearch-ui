@@ -49,6 +49,9 @@ class Search extends React.Component {
             {linkText}
          </a>
         </td>
+        <td>
+          {search.executionTime} seconds
+        </td>
         <td className="text-danger borderless" style={{"width": "20%"}}>
           {search.failMessage}
         </td>
