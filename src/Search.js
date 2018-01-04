@@ -42,6 +42,8 @@ class Search extends React.Component {
       linkText = <span>{search.search.stopPlaceId} ({search.search.stopPlaceName})</span>;
     }
 
+    const executionTime = search.executionTime ? search.executionTime + " seconds" : null;
+
     return (
       <tr className="borderless">
         <td className="borderless">
@@ -50,7 +52,7 @@ class Search extends React.Component {
          </a>
         </td>
         <td>
-          {search.executionTime} seconds
+          {executionTime}
         </td>
         <td className="text-danger borderless" style={{"width": "20%"}}>
           {search.failMessage}
