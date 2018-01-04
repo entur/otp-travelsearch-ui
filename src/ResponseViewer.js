@@ -35,7 +35,7 @@ class ResponseViewer extends React.Component {
 
       return (<div className="modal-background" onClick={() => this.close()}>
         <div className="modal-front" onClick={(e) => e.stopPropagation()}>
-          {this.props.failedSearch.response}
+          {this.props.search.response}
         </div>
       </div>)
     }

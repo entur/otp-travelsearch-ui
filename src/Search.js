@@ -16,14 +16,14 @@ import React from 'react';
 import ResponseViewer from './ResponseViewer';
 
 const { SHAMASH_OTP } = process.TSQA;
-class FailedSearch extends React.Component {
+class Search extends React.Component {
 
   generateShamashHref() {
     // Typo in qa project for prop otpQuery
-    const otpQuery = this.props.failedSearch.otpQuery ? this.props.failedSearch.otpQuery : this.props.failedSearch.otpquery;
+    const otpQuery = this.props.search.otpQuery ? this.props.search.otpQuery : this.props.search.otpquery;
     let shamashHref = SHAMASH_OTP + "/?query=" +  encodeURIComponent(otpQuery) + "&variables=";
-    if(this.props.failedSearch.otpVariables) {
-      const otpVariables = this.props.failedSearch.otpVariables;
+    if(this.props.search.otpVariables) {
+      const otpVariables = this.props.search.otpVariables;
       // Use json stringify for variables. Could have been stringified in otp-travelsearch-qa
       shamashHref += encodeURIComponent(JSON.stringify(otpVariables));
     }
@@ -32,14 +32,14 @@ class FailedSearch extends React.Component {
 
   render() {
     const reportType = this.props.type;
-    const failedSearch = this.props.failedSearch
+    const search = this.props.search
     const shamashHref = this.generateShamashHref();
 
     let linkText;
     if(reportType === "travelSearch") {
-      linkText = <span>{failedSearch.search.fromPlace} {failedSearch.search.origin} to {failedSearch.search.toPlace} {failedSearch.search.destination}</span>;
+      linkText = <span>{search.search.fromPlace} {search.search.origin} to {search.search.toPlace} {search.search.destination}</span>;
     } else if(reportType === "stopTimes") {
-      linkText = <span>{failedSearch.search.stopPlaceId} ({failedSearch.search.stopPlaceName})</span>;
+      linkText = <span>{search.search.stopPlaceId} ({search.search.stopPlaceName})</span>;
     }
 
     return (
@@ -50,13 +50,13 @@ class FailedSearch extends React.Component {
          </a>
         </td>
         <td className="text-danger borderless" style={{"width": "20%"}}>
-          {failedSearch.failMessage}
+          {search.failMessage}
         </td>
 
         <td className="text-warning borderless">
-          <ResponseViewer failedSearch={failedSearch} ref={instance => { this.child = instance; }}/>
+          <ResponseViewer search={search} ref={instance => { this.child = instance; }}/>
           <span onClick={() => this.child.open()} style={{"cursor": "pointer"}}>
-            {failedSearch.response.substring(0,100)}
+            {search.response.substring(0,100)}
           </span>
         </td>
       </tr>
@@ -64,4 +64,4 @@ class FailedSearch extends React.Component {
   }
 }
 
-export default FailedSearch;
+export default Search;

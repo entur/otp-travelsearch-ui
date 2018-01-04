@@ -12,7 +12,7 @@
 // limitations under the Licence.
 
 import React from 'react';
-import FailedSearch from './FailedSearch';
+import Search from './Search';
 
 class SearchGroup extends React.Component {
 
@@ -29,8 +29,8 @@ class SearchGroup extends React.Component {
 
   render() {
     const searches = this.props.members.map(
-      (failedSearch, index) =>
-        <FailedSearch key={index} failedSearch={failedSearch} type={this.props.type} />
+      (search, index) =>
+        <Search key={index} search={search} type={this.props.type} />
     );
     const count = searches.length;
     let details;
