@@ -14,7 +14,7 @@
 import React from 'react';
 import FailedSearch from './FailedSearch';
 
-class FailedSearchGroup extends React.Component {
+class SearchGroup extends React.Component {
 
   constructor() {
     super();
@@ -28,16 +28,16 @@ class FailedSearchGroup extends React.Component {
   }
 
   render() {
-    const failedSearches = this.props.members.map(
+    const searches = this.props.members.map(
       (failedSearch, index) =>
         <FailedSearch key={index} failedSearch={failedSearch} type={this.props.type} />
     );
-    const count = failedSearches.length;
+    const count = searches.length;
     let details;
     if(this.state.expanded) {
       details = <table className="borderless" style={{ width: '100%' }}>
         <tbody>
-          {failedSearches}
+          {searches}
         </tbody>
       </table>
     }
@@ -58,4 +58,4 @@ class FailedSearchGroup extends React.Component {
   }
 }
 
-export default FailedSearchGroup;
+export default SearchGroup;

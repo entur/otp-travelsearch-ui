@@ -12,7 +12,7 @@
 // limitations under the Licence.
 
 import React from 'react';
-import FailedSearchGroup from './FailedSearchGroup';
+import SearchGroup from './SearchGroup';
 
 class FailedSearches extends React.Component {
   constructor() {
@@ -74,7 +74,7 @@ class FailedSearches extends React.Component {
     } else {
       const groupedFailedSearchesComponents = this.groupFailedSearches(report.failedSearches)
                   .map(group => {
-                    return <FailedSearchGroup
+                    return <SearchGroup
                       key={group.name}
                       groupName={group.name}
                       type={report.type}

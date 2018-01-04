@@ -12,7 +12,7 @@
 // limitations under the Licence.
 
 import React from 'react';
-import FailedSearchGroup from './FailedSearchGroup';
+import SearchGroup from './SearchGroup';
 
 class ExecutionTimeReport extends React.Component {
   constructor() {
@@ -68,7 +68,7 @@ class ExecutionTimeReport extends React.Component {
     const groupedSearches = this.groupSearchesOnExecutionTime();
     const groupedSearchesComponents = groupedSearches
                 .map(group => {
-                  return <FailedSearchGroup
+                  return <SearchGroup
                     key={group.name}
                     groupName={group.name}
                     type={this.props.travelSearchReport.type}
