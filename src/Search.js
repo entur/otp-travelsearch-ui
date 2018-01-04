@@ -53,7 +53,7 @@ class Search extends React.Component {
           {search.failMessage}
         </td>
 
-        <td className="text-warning borderless">
+        <td className="text-warning borderless" title="Click to see full response">
           <ResponseViewer search={search} ref={instance => { this.child = instance; }}/>
           <span onClick={() => this.child.open()} style={{"cursor": "pointer"}}>
             {search.response.substring(0,100)}
