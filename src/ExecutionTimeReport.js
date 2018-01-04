@@ -65,10 +65,7 @@ class ExecutionTimeReport extends React.Component {
   }
 
   render() {
-
     const groupedSearches = this.groupSearchesOnExecutionTime();
-    console.log(groupedSearches)
-
     const groupedSearchesComponents = groupedSearches
                 .map(group => {
                   return <FailedSearchGroup
