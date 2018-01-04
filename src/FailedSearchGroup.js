@@ -28,7 +28,7 @@ class FailedSearchGroup extends React.Component {
   }
 
   render() {
-    const failedSearches = this.props.failedSearchGroup.map(
+    const failedSearches = this.props.members.map(
       (failedSearch, index) =>
         <FailedSearch key={index} failedSearch={failedSearch} type={this.props.type} />
     );

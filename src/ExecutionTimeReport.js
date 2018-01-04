@@ -34,28 +34,30 @@ class ExecutionTimeReport extends React.Component {
     const {travelSearchReport} = this.props;
 
     // Execution times present on both failed and successful searches
-    const searches = [...travelSearchReport.successfulSearches, ...travelSearchReport.failedSearches]
-    return searches.reduce((groups, search) => {
-      const executionTime = search.executionTime;
+    const searches = travelSearchReport.successfulSearches ? [...travelSearchReport.successfulSearches, ...travelSearchReport.failedSearches] : travelSearchReport.failedSearches;
+    return searches
+      .filter(search => search.executionTime)
+      .reduce((groups, search) => {
+        const executionTime = search.executionTime;
 
-      const secondsFloor = Math.floor(executionTime);
-      const secondsCeil = Math.ceil(executionTime);
+        const secondsFloor = Math.floor(executionTime);
+        const secondsCeil = Math.ceil(executionTime);
 
-      const groupName = secondsFloor + " to " + secondsCeil + " seconds";
-      const existingGroup = groups.find(group => {
-        return group.name === groupName;
-      });
-
-      if (existingGroup) {
-        existingGroup.members.push(search);
-      } else {
-        groups.push({
-          name: groupName,
-          secondsFloor: secondsFloor,
-          members: [search]
+        const groupName = secondsFloor + " to " + secondsCeil + " seconds";
+        const existingGroup = groups.find(group => {
+          return group.name === groupName;
         });
-      }
-      return groups;
+
+        if (existingGroup) {
+          existingGroup.members.push(search);
+        } else {
+          groups.push({
+            name: groupName,
+            secondsFloor: secondsFloor,
+            members: [search]
+          });
+        }
+        return groups;
     }, [])
     .sort((a, b) =>  {
       return b.secondsFloor - a.secondsFloor;
@@ -73,7 +75,7 @@ class ExecutionTimeReport extends React.Component {
                     key={group.name}
                     groupName={group.name}
                     type={this.props.travelSearchReport.type}
-                    failedSearchGroup={group.members}
+                    members={group.members}
                   />
                 });
 

@@ -78,7 +78,7 @@ class FailedSearches extends React.Component {
                       key={group.name}
                       groupName={group.name}
                       type={report.type}
-                      failedSearchGroup={group.members}
+                      members={group.members}
                     />
                   });
 
