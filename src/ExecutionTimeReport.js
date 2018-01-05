@@ -41,9 +41,24 @@ class ExecutionTimeReport extends React.Component {
         const executionTime = search.executionTime;
 
         const secondsFloor = Math.floor(executionTime);
-        const secondsCeil = Math.ceil(executionTime);
 
-        const groupName = secondsFloor + " to " + secondsCeil + " seconds";
+        let groupName;
+        let sortValue;
+        if (secondsFloor === 0) {
+          groupName = "0 to 1";
+          sortValue = 1;
+        } else if(secondsFloor >= 1 && secondsFloor < 4) {
+          groupName = "1 to 4";
+          sortValue = 2;
+        } else if (secondsFloor >= 4 && secondsFloor < 9) {
+          groupName = "4 to 9";
+          sortValue = 3;
+        } else {
+          groupName = "9 to ∞";
+          sortValue = 4;
+        }
+        groupName += " seconds";
+
         const existingGroup = groups.find(group => {
           return group.name === groupName;
         });
@@ -53,14 +68,14 @@ class ExecutionTimeReport extends React.Component {
         } else {
           groups.push({
             name: groupName,
-            secondsFloor: secondsFloor,
+            sortValue: sortValue,
             members: [search]
           });
         }
         return groups;
     }, [])
     .sort((a, b) =>  {
-      return b.secondsFloor - a.secondsFloor;
+      return b.sortValue - a.sortValue;
     })
   }
 
