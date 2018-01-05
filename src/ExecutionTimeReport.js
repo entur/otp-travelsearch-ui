@@ -91,15 +91,6 @@ class ExecutionTimeReport extends React.Component {
                   />
                 });
 
-    let details;
-    if(this.state.expanded) {
-      details = <table className="borderless" style={{ width: '100%' }}>
-        <tbody>
-          {groupedSearchesComponents}
-        </tbody>
-      </table>
-    }
-
     if (!this.state.expanded) {
       return (
         <tr className="borderless">
@@ -117,8 +108,6 @@ class ExecutionTimeReport extends React.Component {
         </tr>
       );
     } else {
-
-
       return (
         <tr className="borderless">
           <td colSpan="9">
@@ -131,9 +120,7 @@ class ExecutionTimeReport extends React.Component {
             >
             Collapse execution time report
             </button>
-
-            {details}
-
+            {groupedSearchesComponents}
           </td>
         </tr>
       );
