@@ -2,16 +2,16 @@
   "carbon": {
     "REPORT_BASE_URI": "http://otpreport-test.entur.org/otp-travelsearch-qa",
     "REPORT_DATA_FOLDER": "reports",
-    "SHAMASH_OTP": "https://api-test.entur.org/doc/shamash-otp"
+    "SHAMASH_OTP": "https://api-test.entur.org/doc/shamash-journeyplanner"
   },
   "radon": {
     "REPORT_BASE_URI": "http://otpreport-stage.entur.org/otp-travelsearch-qa",
     "REPORT_DATA_FOLDER": "reports",
-    "SHAMASH_OTP": "https://api-stage.entur.org/doc/shamash-otp"
+    "SHAMASH_OTP": "https://api-stage.entur.org/doc/shamash-journeyplanner"
   },
   "neon": {
     "REPORT_BASE_URI": "http://otpreport.entur.org/otp-travelsearch-qa",
     "REPORT_DATA_FOLDER": "reports",
-    "SHAMASH_OTP": "https://api.entur.org/doc/shamash-otp"
+    "SHAMASH_OTP": "https://api.entur.org/doc/shamash-journeyplanner"
   }
 }
