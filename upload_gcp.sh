@@ -8,7 +8,7 @@ if [ -z "$REPORT_BASE_URI" ]; then
 fi
 
 echo "Uploading build directory content to $REPORT_BASE_URI"
-gsutil -h "Cache-Control:no-cache" -m cp -r build/* $REPORT_BASE_URI
+gsutil -h "Cache-Control:private" -m cp -r build/* $REPORT_BASE_URI
 
 gsutil -m acl ch -u AllUsers:R $REPORT_BASE_URI/*
 
