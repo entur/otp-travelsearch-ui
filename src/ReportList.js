@@ -16,7 +16,7 @@ import axios from 'axios';
 import Report from './Report';
 import Logo from './Logo';
 
-const MAX_REPORTS = 50;
+const MAX_REPORTS = 25;
 const { REPORT_BASE_URI, REPORT_DATA_FOLDER, ENVIRONMENT } = process.TSQA;
 const REPORT_PATH = REPORT_BASE_URI + "/" + REPORT_DATA_FOLDER;
 const INDEX_URI = REPORT_PATH + "/index";
