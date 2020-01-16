@@ -56,6 +56,7 @@ class ReportList extends React.Component {
 
       // Only fetch the newest ones
       reportLines = reportLines
+        .filter(line => line !== '')
         .sort(sortReportLines)
         .slice(0, MAX_REPORTS)
         .filter(reportLocation => {
