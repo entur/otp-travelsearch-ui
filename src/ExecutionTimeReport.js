@@ -33,8 +33,8 @@ class ExecutionTimeReport extends React.Component {
   groupSearchesOnExecutionTime() {
     const {travelSearchReport} = this.props;
 
-    // Execution times present on both failed and successful searches
-    const searches = travelSearchReport.successfulSearches ? [...travelSearchReport.successfulSearches, ...travelSearchReport.failedSearches] : travelSearchReport.failedSearches;
+    const searches = travelSearchReport.successfulSearches || [];
+
     return searches
       .filter(search => search.executionTime)
       .reduce((groups, search) => {
