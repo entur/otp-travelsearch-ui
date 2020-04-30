@@ -53,10 +53,12 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 // Configure environment
 const config = JSON.parse(fs.readFileSync('./config/config.json', 'utf8'));
 const buildEnv = process.env.BUILD_ENV ? process.env.BUILD_ENV : "carbon";
+const serviceVersion = process.env.SERVICE_VERSION ? process.env.SERVICE_VERSION : "v1";
 console.log("buildEnv", buildEnv);
-console.log("conf ", config[buildEnv].REPORT_BASE_URI);
-console.log("conf ", config[buildEnv].REPORT_DATA_FOLDER);
-console.log("conf ", config[buildEnv].SHAMASH_OTP);
+console.log("serviceVersion", serviceVersion);
+console.log("conf ", config[buildEnv][serviceVersion].REPORT_BASE_URI);
+console.log("conf ", config[buildEnv][serviceVersion].REPORT_DATA_FOLDER);
+console.log("conf ", config[buildEnv][serviceVersion].SHAMASH_OTP);
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
@@ -553,9 +555,10 @@ module.exports = function(webpackEnv) {
       new webpack.DefinePlugin({
         'process.TSQA': {
           'ENVIRONMENT': JSON.stringify(buildEnv),
-          'REPORT_BASE_URI': JSON.stringify(config[buildEnv].REPORT_BASE_URI),
-          'REPORT_DATA_FOLDER': JSON.stringify(config[buildEnv].REPORT_DATA_FOLDER),
-          'SHAMASH_OTP': JSON.stringify(config[buildEnv].SHAMASH_OTP)
+          'SERVICE_VERSION': JSON.stringify(serviceVersion),
+          'REPORT_BASE_URI': JSON.stringify(config[buildEnv][serviceVersion].REPORT_BASE_URI),
+          'REPORT_DATA_FOLDER': JSON.stringify(config[buildEnv][serviceVersion].REPORT_DATA_FOLDER),
+          'SHAMASH_OTP': JSON.stringify(config[buildEnv][serviceVersion].SHAMASH_OTP)
         }
       }),
       // This is necessary to emit hot updates (currently CSS only):

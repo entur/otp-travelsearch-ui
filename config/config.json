@@ -1,17 +1,33 @@
 {
   "carbon": {
-    "REPORT_BASE_URI": "http://otpreport-test.entur.org/otp-travelsearch-qa",
-    "REPORT_DATA_FOLDER": "reports",
-    "SHAMASH_OTP": "https://api-test.entur.org/doc/shamash-journeyplanner"
+    "v1": {
+      "REPORT_BASE_URI": "http://otpreport-test.entur.org/otp-travelsearch-qa",
+      "REPORT_DATA_FOLDER": "reports",
+      "SHAMASH_OTP": "https://api.dev.entur.io/graphql-explorer/journey-planner"
+    },
+    "v2": {
+      "REPORT_BASE_URI": "http://otpreport-test.entur.org/otp-travelsearch-qa-otp2",
+      "REPORT_DATA_FOLDER": "reports",
+      "SHAMASH_OTP": "https://api.dev.entur.io/graphql-explorer/journey-planner-v3"
+    }
   },
   "radon": {
-    "REPORT_BASE_URI": "http://otpreport-stage.entur.org/otp-travelsearch-qa",
-    "REPORT_DATA_FOLDER": "reports",
-    "SHAMASH_OTP": "https://api-stage.entur.org/doc/shamash-journeyplanner"
+    "v1": {
+      "REPORT_BASE_URI": "http://otpreport-stage.entur.org/otp-travelsearch-qa",
+      "REPORT_DATA_FOLDER": "reports",
+      "SHAMASH_OTP": "https://api.staging.entur.io/graphql-explorer/journey-planner"
+    },
+    "v2": {
+      "REPORT_BASE_URI": "http://otpreport-stage.entur.org/otp-travelsearch-qa-otp2",
+      "REPORT_DATA_FOLDER": "reports",
+      "SHAMASH_OTP": "https://api.staging.entur.io/graphql-explorer/journey-planner-v3"
+    }
   },
   "neon": {
-    "REPORT_BASE_URI": "http://otpreport.entur.org/otp-travelsearch-qa",
-    "REPORT_DATA_FOLDER": "reports",
-    "SHAMASH_OTP": "https://api.entur.org/doc/shamash-journeyplanner"
+    "v1": {
+      "REPORT_BASE_URI": "http://otpreport.entur.org/otp-travelsearch-qa",
+      "REPORT_DATA_FOLDER": "reports",
+      "SHAMASH_OTP": "https://api.entur.io/graphql-explorer/journey-planner"
+    }
   }
 }

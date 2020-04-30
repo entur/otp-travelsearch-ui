@@ -33,3 +33,17 @@ BUILD_ENV=neon yarn build
 ```
 ./upload_gcp.sh gs://otpreport.entur.org/otp-travelsearch-qa
 ```
+
+
+## How to build and deploy for otp2
+
+OTP2 reports exist at otp-travelsearch-qa-otp2. To build and deploy for it add the following env:
+
+    SERVICE_VERSION=v2
+
+and append `-otp2`, to upload bucket folder argument. For example, to
+
+To build and deploy for otp2 i carbon:
+
+    BUILD_ENV=carbon SERVICE_VERSION=v2 yarn build
+    ./upload_gcp.sh gs://otpreport-test.entur.org/otp-travelsearch-qa-otp2

@@ -133,6 +133,5 @@
     "presets": [
       "react-app"
     ]
-  },
-  "homepage": "/otp-travelsearch-qa"
+  }
 }

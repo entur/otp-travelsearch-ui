@@ -13,4 +13,4 @@ gsutil -h "Cache-Control:private" -m cp -r build/* $REPORT_BASE_URI
 gsutil -m acl ch -u AllUsers:R $REPORT_BASE_URI/*
 
 # Avoid doing this for the reports directory,
-gsutil -m acl ch -r -u AllUsers:R $REPORT_BASE_URI/static/
+gsutil -m acl ch -r -u AllUsers:R $REPORT_BASE_URI/static/*
