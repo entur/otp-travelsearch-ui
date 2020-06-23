@@ -28,6 +28,11 @@
       "REPORT_BASE_URI": "http://otpreport.entur.org/otp-travelsearch-qa",
       "REPORT_DATA_FOLDER": "reports",
       "SHAMASH_OTP": "https://api.entur.io/graphql-explorer/journey-planner"
+    },
+    "v2": {
+      "REPORT_BASE_URI": "http://otpreport.entur.org/otp-travelsearch-qa-otp2",
+      "REPORT_DATA_FOLDER": "reports",
+      "SHAMASH_OTP": "https://api.entur.io/graphql-explorer/journey-planner-v3"
     }
   }
 }
