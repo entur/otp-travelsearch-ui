@@ -1,5 +1,5 @@
 {
-  "carbon": {
+  "dev": {
     "v1": {
       "REPORT_BASE_URI": "http://otpreport.dev.entur.org/otp-travelsearch-qa",
       "REPORT_DATA_FOLDER": "reports",
@@ -11,7 +11,7 @@
       "SHAMASH_OTP": "https://api.dev.entur.io/graphql-explorer/journey-planner-v3"
     }
   },
-  "radon": {
+  "staging": {
     "v1": {
       "REPORT_BASE_URI": "http://otpreport-stage.entur.org/otp-travelsearch-qa",
       "REPORT_DATA_FOLDER": "reports",
@@ -23,7 +23,7 @@
       "SHAMASH_OTP": "https://api.staging.entur.io/graphql-explorer/journey-planner-v3"
     }
   },
-  "neon": {
+  "production": {
     "v1": {
       "REPORT_BASE_URI": "http://otpreport.entur.org/otp-travelsearch-qa",
       "REPORT_DATA_FOLDER": "reports",

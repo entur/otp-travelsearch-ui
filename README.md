@@ -14,22 +14,22 @@ yarn build
 
 ## Build for specific environment for reports.
 ```
-BUILD_ENV=neon PUBLIC_URL="/otp-travelsearch-qa/" yarn build
+BUILD_ENV=production PUBLIC_URL="/otp-travelsearch-qa/" yarn build
 ```
 
 ## Upload to gcp after build command above is executed
 
-### Test/carbon
+### Dev
 ```
 ./upload_gcp.sh gs://otpreport.dev.entur.org/otp-travelsearch-qa
 ```
 
-### Production/stage
+### Staging
 ```
 ./upload_gcp.sh gs://otpreport-stage.entur.org/otp-travelsearch-qa
 ```
 
-### Production/neon
+### Production
 ```
 ./upload_gcp.sh gs://otpreport.entur.org/otp-travelsearch-qa
 ```
@@ -43,7 +43,7 @@ OTP2 reports exist at otp-travelsearch-qa-otp2. To build and deploy for it add t
 
 and append `-otp2`, to upload bucket folder argument. For example, to
 
-To build and deploy for otp2 i carbon:
+To build and deploy for otp2 in dev:
 
-    BUILD_ENV=carbon SERVICE_VERSION=v2 PUBLIC_URL="/otp-travelsearch-qa-otp2/" yarn build
+    BUILD_ENV=dev SERVICE_VERSION=v2 PUBLIC_URL="/otp-travelsearch-qa-otp2/" yarn build
     ./upload_gcp.sh gs://otpreport.dev.entur.org/otp-travelsearch-qa-otp2
