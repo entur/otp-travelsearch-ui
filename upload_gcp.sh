@@ -3,7 +3,7 @@
 REPORT_BASE_URI=$1
 
 if [ -z "$REPORT_BASE_URI" ]; then
-  echo "USAGE: $0 gs://otpreport-test.entur.org/otp-travelsearch-qa"
+  echo "USAGE: $0 gs://otpreport.dev.entur.org/otp-travelsearch-qa"
   exit 1
 fi
 

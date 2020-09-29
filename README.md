@@ -21,7 +21,7 @@ BUILD_ENV=neon PUBLIC_URL="/otp-travelsearch-qa/" yarn build
 
 ### Test/carbon
 ```
-./upload_gcp.sh gs://otpreport-test.entur.org/otp-travelsearch-qa
+./upload_gcp.sh gs://otpreport.dev.entur.org/otp-travelsearch-qa
 ```
 
 ### Production/stage
@@ -46,4 +46,4 @@ and append `-otp2`, to upload bucket folder argument. For example, to
 To build and deploy for otp2 i carbon:
 
     BUILD_ENV=carbon SERVICE_VERSION=v2 PUBLIC_URL="/otp-travelsearch-qa-otp2/" yarn build
-    ./upload_gcp.sh gs://otpreport-test.entur.org/otp-travelsearch-qa-otp2
+    ./upload_gcp.sh gs://otpreport.dev.entur.org/otp-travelsearch-qa-otp2
