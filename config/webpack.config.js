@@ -52,7 +52,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // Configure environment
 const config = JSON.parse(fs.readFileSync('./config/config.json', 'utf8'));
-const buildEnv = process.env.BUILD_ENV ? process.env.BUILD_ENV : "carbon";
+const buildEnv = process.env.BUILD_ENV ? process.env.BUILD_ENV : "dev";
 const serviceVersion = process.env.SERVICE_VERSION ? process.env.SERVICE_VERSION : "v1";
 console.log("buildEnv", buildEnv);
 console.log("serviceVersion", serviceVersion);
