@@ -11,7 +11,7 @@
 // See the Licence for the specific language governing permissions and
 // limitations under the Licence.
 
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 import Report from './Report';
 import Logo from './Logo';
@@ -42,21 +42,15 @@ const sortByDate = (a, b) => {
   return 0;
 };
 
-class ReportList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      environment: 'production',
-      otpVersion: 'v1',
-      reportLocations: [],
-      reports: [], 
-      intervalId: null 
-    };
-  }
+const ReportList = () => {
+  const [environment, setEnvironment] = useState('production');
+  const [otpVersion, setOtpVersion] = useState('v1');
+  const [reportLocations, setReportsLocations] = useState([]);
+  const [reports, setReports] = useState([]);
 
-  fetchReports() {
-    const REPORT_BASE_URI = config[this.state.environment][this.state.otpVersion].REPORT_BASE_URI;
-    const REPORT_DATA_FOLDER = config[this.state.environment][this.state.otpVersion].REPORT_DATA_FOLDER;
+  const fetchReports = useCallback(() => {
+    const REPORT_BASE_URI = config[environment][otpVersion].REPORT_BASE_URI;
+    const REPORT_DATA_FOLDER = config[environment][otpVersion].REPORT_DATA_FOLDER;
     const REPORT_PATH = REPORT_BASE_URI + "/" + REPORT_DATA_FOLDER;
     const INDEX_URI = REPORT_PATH + "/index?" + new Date().getTime();
 
@@ -69,12 +63,11 @@ class ReportList extends React.Component {
         .sort(sortReportLines)
         .slice(0, MAX_REPORTS)
         .filter(reportLocation => {
-          return this.state.reportLocations.indexOf(reportLocation) === -1;
+          return reportLocations.indexOf(reportLocation) === -1;
         });
 
-      this.setState({
-        reportLocations: [...this.state.reportLocations, ...reportLines]
-      });
+
+      setReportsLocations((prev) => [...prev, ...reportLines])
 
       let promiseArray = reportLines.map(reportLocation =>
         axios.get(REPORT_PATH + '/' + reportLocation)
@@ -84,7 +77,7 @@ class ReportList extends React.Component {
         const newReports = [];
         results.forEach(result => {
           let found = false;
-          this.state.reports.forEach(existingReport => {
+          reports.forEach(existingReport => {
             if (existingReport.date === result.data.date) {
               found = true;
             }
@@ -93,104 +86,93 @@ class ReportList extends React.Component {
             newReports.push(result.data);
           }
         });
-        // If adding reports, sort all and keep the newest ones
-        let newReportsState = [...this.state.reports, ...newReports]
-          .sort(sortByDate)
-          .slice(0, MAX_REPORTS);
 
-        this.setState({ reports: newReportsState });
+        // If adding reports, sort all and keep the newest ones
+        setReports((prev) =>
+          [...reports, ...newReports]
+            .sort(sortByDate)
+            .slice(0, MAX_REPORTS)
+        );
       });
     });
-  }
+  }, [environment, otpVersion]);
 
-  componentDidMount() {
-    const intervalId = setInterval(this.fetchReports.bind(this), 40000);
-    this.setState({ intervalId });
-    this.fetchReports();
-  }
+  const updateEnvironment = useCallback(env => {
+    setEnvironment(env);
+    setReportsLocations([]);
+    setReports([]);
+    
+    fetchReports();
+  }, []);
 
-  componentWillUnmount() {
-    clearInterval(this.state.intervalId);
-  }
+  const updateOTPVersion = useCallback(version => {
+    setOtpVersion(version);
+    setReportsLocations([]);
+    setReports([]);
+    fetchReports();
+  }, []);
 
-  updateEnvironment(env) {
-    this.setState({
-      environment: env,
-      reportLocations: [],
-      reports: []
-    });
-    this.fetchReports();
-  }
-
-  updateOTPVersion(version) {
-    this.setState({
-      otpVersion: version,
-      reportLocations: [],
-      reports: []
-    });
-    this.fetchReports();
-  }
-
-  render() {
-    let reportComponents = [];
-
-    for (let i = 0; i < this.state.reports.length; i++) {
-      const report = this.state.reports[i];
-
-      reportComponents.push(
-        <Report key={report.date} report={report} date={report.date} className="report-date"/>
-      );
+  useEffect(() => {
+    const intervalId = setInterval(fetchReports, 40000);
+    fetchReports();
+    return () => {
+      clearInterval(intervalId);
     }
+  }, []);
+  
+  let reportComponents = reports.map(report => (
+    <Report key={report.date} report={report} date={report.date} className="report-date"/>
+  ));
 
-    if (reportComponents.length === 0) {
-      reportComponents = null;
-    }
+  if (reportComponents.length === 0) {
+    reportComponents = null;
+  }
 
-    return (
-      <div>
-        <div
-          className="pt-3 pb-2 pl-3"
-          style={{
-            background: 'rgb(24, 28, 86)',
-            color: '#fff',
-            height: 65
-          }}
-        >
-          <Logo />
-          <h2 style={{ float: 'left', position: 'relative', marginLeft: 10, marginRight: 10 }}>
-            OTP Travel Search Reports
-          </h2>
-          <small className="px-2">Environment: </small>
-          <select value={this.state.environment} onChange={event => this.updateEnvironment(event.target.value)}>
-            <option>dev</option>
-            <option>staging</option>
-            <option>production</option>
-          </select>
-          <small className="px-2">OTP version: </small>
-          <select value={this.state.otpVersion} onChange={event => this.updateOTPVersion(event.target.value)}>
-            <option>v1</option>
-            <option>v2</option>
-          </select>
-        </div>
-
-        <table className="table table-condensed my-4 mx-4">
-          <tbody>
-            <tr>
-              <th>Date</th>
-              <th>Travel searches failed</th>
-              <th>Travel searches count</th>
-              <th>Travel searches seconds total</th>
-              <th>Travel searches seconds average</th>
-              <th>Stop times failed</th>
-              <th>Stop times count</th>
-              <th>Stop times seconds total</th>
-              <th>Stop times seconds average</th>
-            </tr>
-            {reportComponents}
-          </tbody>
-        </table>
+  return (
+    <div>
+      <div
+        className="pt-3 pb-2 pl-3"
+        style={{
+          background: 'rgb(24, 28, 86)',
+          color: '#fff',
+          height: 65
+        }}
+      >
+        <Logo />
+        <h2 style={{ float: 'left', position: 'relative', marginLeft: 10, marginRight: 10 }}>
+          OTP Travel Search Reports
+        </h2>
+        <small className="px-2">Environment: </small>
+        <select value={environment} onChange={event => updateEnvironment(event.target.value)}>
+          <option>dev</option>
+          <option>staging</option>
+          <option>production</option>
+        </select>
+        <small className="px-2">OTP version: </small>
+        <select value={otpVersion} onChange={event => updateOTPVersion(event.target.value)}>
+          <option>v1</option>
+          <option>v2</option>
+        </select>
       </div>
-    );
-  }
+
+      <table className="table table-condensed my-4 mx-4">
+        <tbody>
+          <tr>
+            <th>Date</th>
+            <th>Travel searches failed</th>
+            <th>Travel searches count</th>
+            <th>Travel searches seconds total</th>
+            <th>Travel searches seconds average</th>
+            <th>Stop times failed</th>
+            <th>Stop times count</th>
+            <th>Stop times seconds total</th>
+            <th>Stop times seconds average</th>
+          </tr>
+          {reportComponents}
+        </tbody>
+      </table>
+    </div>
+  );
 }
+
 export default ReportList;
