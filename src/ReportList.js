@@ -100,17 +100,10 @@ const ReportList = () => {
 
   const updateEnvironment = useCallback(env => {
     setEnvironment(env);
-    setReportsLocations([]);
-    setReports([]);
-    
-    fetchReports();
   }, []);
 
   const updateOTPVersion = useCallback(version => {
     setOtpVersion(version);
-    setReportsLocations([]);
-    setReports([]);
-    fetchReports();
   }, []);
 
   useEffect(() => {
