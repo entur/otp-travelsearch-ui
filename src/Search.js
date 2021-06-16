@@ -15,7 +15,8 @@ import React from 'react';
 
 import ResponseViewer from './ResponseViewer';
 
-const { SHAMASH_OTP } = process.TSQA;
+const SHAMASH_OTP = process.env.REACT_APP_SHAMASH_OTP;
+
 class Search extends React.Component {
 
   generateShamashHref() {

@@ -15,11 +15,9 @@ import React from 'react';
 import axios from 'axios';
 import Report from './Report';
 import Logo from './Logo';
+import config from './config.json';
 
 const MAX_REPORTS = 25;
-const { REPORT_BASE_URI, REPORT_DATA_FOLDER, ENVIRONMENT } = process.TSQA;
-const REPORT_PATH = REPORT_BASE_URI + "/" + REPORT_DATA_FOLDER;
-const INDEX_URI = REPORT_PATH + "/index?" + new Date().getTime();
 
 const sortReportLines = (a, b) => {
   const aTimestamp = parseInt(
@@ -47,10 +45,21 @@ const sortByDate = (a, b) => {
 class ReportList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { reportLocations: [], reports: [], intervalId: null };
+    this.state = {
+      environment: 'production',
+      otpVersion: 'v1',
+      reportLocations: [],
+      reports: [], 
+      intervalId: null 
+    };
   }
 
   fetchReports() {
+    const REPORT_BASE_URI = config[this.state.environment][this.state.otpVersion].REPORT_BASE_URI;
+    const REPORT_DATA_FOLDER = config[this.state.environment][this.state.otpVersion].REPORT_DATA_FOLDER;
+    const REPORT_PATH = REPORT_BASE_URI + "/" + REPORT_DATA_FOLDER;
+    const INDEX_URI = REPORT_PATH + "/index?" + new Date().getTime();
+
     axios.get(INDEX_URI).then(response => {
       let reportLines = response.data.split('\n');
 
@@ -104,6 +113,24 @@ class ReportList extends React.Component {
     clearInterval(this.state.intervalId);
   }
 
+  updateEnvironment(env) {
+    this.setState({
+      environment: env,
+      reportLocations: [],
+      reports: []
+    });
+    this.fetchReports();
+  }
+
+  updateOTPVersion(version) {
+    this.setState({
+      otpVersion: version,
+      reportLocations: [],
+      reports: []
+    });
+    this.fetchReports();
+  }
+
   render() {
     let reportComponents = [];
 
@@ -130,10 +157,20 @@ class ReportList extends React.Component {
           }}
         >
           <Logo />
-          <h2 style={{ float: 'left', position: 'relative', marginLeft: 10 }}>
+          <h2 style={{ float: 'left', position: 'relative', marginLeft: 10, marginRight: 10 }}>
             OTP Travel Search Reports
           </h2>
-          <small className="px-2">{ENVIRONMENT}</small>
+          <small className="px-2">Environment: </small>
+          <select value={this.state.environment} onChange={event => this.updateEnvironment(event.target.value)}>
+            <option>dev</option>
+            <option>staging</option>
+            <option>production</option>
+          </select>
+          <small className="px-2">OTP version: </small>
+          <select value={this.state.otpVersion} onChange={event => this.updateOTPVersion(event.target.value)}>
+            <option>v1</option>
+            <option>v2</option>
+          </select>
         </div>
 
         <table className="table table-condensed my-4 mx-4">
