@@ -12,38 +12,10 @@ yarn start
 yarn build
 ```
 
-## Build for specific environment for reports.
+## Deploy
+
+Requires that you are authenticated with google cloud and have necessary rights for Firebase deployment.
+
 ```
-BUILD_ENV=production PUBLIC_URL="/otp-travelsearch-qa/" yarn build
+yarn deploy
 ```
-
-## Upload to gcp after build command above is executed
-
-### Dev
-```
-./upload_gcp.sh gs://otpreport.dev.entur.org/otp-travelsearch-qa
-```
-
-### Staging
-```
-./upload_gcp.sh gs://otpreport-stage.entur.org/otp-travelsearch-qa
-```
-
-### Production
-```
-./upload_gcp.sh gs://otpreport.entur.org/otp-travelsearch-qa
-```
-
-
-## How to build and deploy for otp2
-
-OTP2 reports exist at otp-travelsearch-qa-otp2. To build and deploy for it add the following envs:
-
-    SERVICE_VERSION=v2 PUBLIC_URL="/otp-travelsearch-qa-otp2/"
-
-and append `-otp2`, to upload bucket folder argument. For example, to
-
-To build and deploy for otp2 in dev:
-
-    BUILD_ENV=dev SERVICE_VERSION=v2 PUBLIC_URL="/otp-travelsearch-qa-otp2/" yarn build
-    ./upload_gcp.sh gs://otpreport.dev.entur.org/otp-travelsearch-qa-otp2
