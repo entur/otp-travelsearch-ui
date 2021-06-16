@@ -16,6 +16,7 @@ import axios from 'axios';
 import Report from './Report';
 import Logo from './Logo';
 import config from './config.json';
+import { useQueryParam } from './useQueryParam';
 
 const MAX_REPORTS = 25;
 
@@ -43,8 +44,8 @@ const sortByDate = (a, b) => {
 };
 
 const ReportList = () => {
-  const [environment, setEnvironment] = useState('production');
-  const [otpVersion, setOtpVersion] = useState('v1');
+  const [environment, setEnvironment] = useQueryParam('environment', 'production');
+  const [otpVersion, setOtpVersion] = useQueryParam('otpVersion', 'v1');
   const [reportLocations, setReportsLocations] = useState([]);
   const [reports, setReports] = useState([]);
 
