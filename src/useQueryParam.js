@@ -17,7 +17,8 @@ export const useQueryParam = (key, initialValue) => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     urlParams.set(key, newValue);
-    window.location.search = urlParams.toString();
+    window.history.pushState({}, document.title, `${window.location.pathname}?${urlParams.toString()}`)
+    setValue(newValue);
   });
 
   useEffect(() => {

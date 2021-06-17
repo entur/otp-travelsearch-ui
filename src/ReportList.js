@@ -112,7 +112,7 @@ const ReportList = () => {
     return () => {
       clearInterval(intervalId);
     }
-  }, []);
+  }, [environment, otpVersion]);
   
   let reportComponents = reports.map(report => (
     <Report key={report.date} report={report} date={report.date} className="report-date"/>
