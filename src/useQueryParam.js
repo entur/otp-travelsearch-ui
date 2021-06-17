@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 
-const LOCATION_CHANGE_EVENT = 'locationchange';
+const LOCATION_CHANGE_EVENT = 'popstate';
 
 export const useQueryParam = (key, initialValue) => {
   const [value, setValue] = useState(initialValue);
