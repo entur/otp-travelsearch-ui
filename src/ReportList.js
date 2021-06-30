@@ -98,6 +98,10 @@ const ReportList = () => {
             .slice(0, MAX_REPORTS)
         );
       });
+    }).catch(e => {
+      if (!axios.isCancel(e)) {
+        throw e;
+      }
     });
   }, [environment, otpVersion]);
 
