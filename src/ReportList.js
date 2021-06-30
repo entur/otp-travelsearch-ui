@@ -11,7 +11,7 @@
 // See the Licence for the specific language governing permissions and
 // limitations under the Licence.
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Report from './Report';
 import Logo from './Logo';
@@ -48,14 +48,17 @@ const ReportList = () => {
   const [otpVersion, setOtpVersion] = useQueryParam('otpVersion', 'v1');
   const [reportLocations, setReportsLocations] = useState([]);
   const [reports, setReports] = useState([]);
+  const source = useRef();
 
   const fetchReports = useCallback(() => {
+    source.current?.cancel();
+    source.current = axios.CancelToken.source();
     const REPORT_BASE_URI = config[environment][otpVersion].REPORT_BASE_URI;
     const REPORT_DATA_FOLDER = config[environment][otpVersion].REPORT_DATA_FOLDER;
     const REPORT_PATH = REPORT_BASE_URI + "/" + REPORT_DATA_FOLDER;
     const INDEX_URI = REPORT_PATH + "/index?" + new Date().getTime();
 
-    axios.get(INDEX_URI).then(response => {
+    axios.get(INDEX_URI, { cancelToken: source.current.token }).then(response => {
       let reportLines = response.data.split('\n');
 
       // Only fetch the newest ones
@@ -71,7 +74,7 @@ const ReportList = () => {
       setReportsLocations((prev) => [...prev, ...reportLines])
 
       let promiseArray = reportLines.map(reportLocation =>
-        axios.get(REPORT_PATH + '/' + reportLocation)
+        axios.get(REPORT_PATH + '/' + reportLocation, { cancelToken: source.current.token })
       );
 
       axios.all(promiseArray).then(results => {
@@ -99,10 +102,14 @@ const ReportList = () => {
   }, [environment, otpVersion]);
 
   const updateEnvironment = useCallback(env => {
+    setReports([]);
+    setReportsLocations([]);
     setEnvironment(env);
   }, []);
 
   const updateOTPVersion = useCallback(version => {
+    setReports([]);
+    setReportsLocations([]);
     setOtpVersion(version);
   }, []);
 
