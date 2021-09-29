@@ -11,63 +11,65 @@
 // See the Licence for the specific language governing permissions and
 // limitations under the Licence.
 
-import React from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 
 import ResponseViewer from './ResponseViewer';
+import config from './config.json';
+import { useQueryParam } from './useQueryParam';
 
-const SHAMASH_OTP = process.env.REACT_APP_SHAMASH_OTP;
+const Search = ({ search, type }) => {
+  const [environment] = useQueryParam('environment', 'production');
+  const [otpVersion] = useQueryParam('otpVersion', 'v1');
 
-class Search extends React.Component {
+  const child = useRef();
 
-  generateShamashHref() {
+  const generateShamashHref = useCallback(() => {
     // Typo in qa project for prop otpQuery
-    const otpQuery = this.props.search.otpQuery ? this.props.search.otpQuery : this.props.search.otpquery;
-    let shamashHref = SHAMASH_OTP + "/?query=" +  encodeURIComponent(otpQuery) + "&variables=";
-    if(this.props.search.otpVariables) {
-      const otpVariables = this.props.search.otpVariables;
+    const otpQuery = search.otpQuery ? search.otpQuery : search.otpquery;
+    let shamashHref = config[environment][otpVersion]['SHAMASH_OTP'] + "/?query=" +  encodeURIComponent(otpQuery) + "&variables=";
+    if(search.otpVariables) {
+      const otpVariables = search.otpVariables;
       // Use json stringify for variables. Could have been stringified in otp-travelsearch-qa
       shamashHref += encodeURIComponent(JSON.stringify(otpVariables));
     }
     return shamashHref;
+  }, [search, environment, otpVersion]);
+
+
+  const reportType = type;
+  const shamashHref = generateShamashHref();
+
+  let linkText;
+  if(reportType === "travelSearch") {
+    linkText = <span>{search.search.fromPlace} {search.search.origin} to {search.search.toPlace} {search.search.destination}</span>;
+  } else if(reportType === "stopTimes") {
+    linkText = <span>{search.search.stopPlaceId} ({search.search.stopPlaceName})</span>;
   }
 
-  render() {
-    const reportType = this.props.type;
-    const search = this.props.search
-    const shamashHref = this.generateShamashHref();
+  const executionTime = search.executionTime ? search.executionTime + " seconds" : null;
 
-    let linkText;
-    if(reportType === "travelSearch") {
-      linkText = <span>{search.search.fromPlace} {search.search.origin} to {search.search.toPlace} {search.search.destination}</span>;
-    } else if(reportType === "stopTimes") {
-      linkText = <span>{search.search.stopPlaceId} ({search.search.stopPlaceName})</span>;
-    }
+  return (
+    <tr className="borderless">
+      <td className="borderless">
+        <a href={shamashHref} target="_blank" style={{color: "#5AC39A"}}>
+          {linkText}
+       </a>
+      </td>
+      <td>
+        {executionTime}
+      </td>
+      <td className="text-danger borderless" style={{"width": "20%"}}>
+        {search.failMessage}
+      </td>
 
-    const executionTime = search.executionTime ? search.executionTime + " seconds" : null;
-
-    return (
-      <tr className="borderless">
-        <td className="borderless">
-          <a href={shamashHref} target="_blank" style={{color: "#5AC39A"}}>
-            {linkText}
-         </a>
-        </td>
-        <td>
-          {executionTime}
-        </td>
-        <td className="text-danger borderless" style={{"width": "20%"}}>
-          {search.failMessage}
-        </td>
-
-        <td className="text-warning borderless" title="Click to see full response">
-          <ResponseViewer search={search} ref={instance => { this.child = instance; }}/>
-          <span onClick={() => this.child.open()} style={{"cursor": "pointer"}}>
-            {search.response.substring(0,100)}
-          </span>
-        </td>
-      </tr>
-    )
-  }
+      <td className="text-warning borderless" title="Click to see full response">
+        <ResponseViewer search={search} ref={instance => { child.current = instance; }}/>
+        <span onClick={() => child.open()} style={{"cursor": "pointer"}}>
+          {search.response.substring(0,100)}
+        </span>
+      </td>
+    </tr>
+  );
 }
 
 export default Search;
